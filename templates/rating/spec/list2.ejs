@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="/static/css/applicants/list.css" />
+    <link
+      rel="shortcut icon"
+      href="/static/image/favicons.ico"
+      type="image/x-icon"
+    />
+
+    <style>
+      [v-cloak] {
+        display: none;
+      }
+    </style>
+    <title>Рейтинг - Специалитет</title>
+  </head>
+  <body id="start">
+    <%-include('../../header.ejs') %>
+    <div class="container-fluid">
+      <div id="app" v-cloak>
+        <div v-if="list.NumMest">
+          <div class="mt-5">
+            <div class="m-2 my-4">
+              <h5>Уровень образования - Специалитет</h5>
+              <h5>Направление/Специальность - {{ list.Napravlenie }}</h5>
+              <h5>Форма обучения - {{ list.Form }}</h5>
+              <h5>Источник финансирования - Бюджетная основа</h5>
+              <h5>Число мест - {{ list.NumMest }}</h5>
+              <h6 class="ms-4">
+                для абитуриентов с особыми правами -
+                {{ list.NumParava }}
+              </h6>
+              <h6 class="ms-4">
+                на целевой приём -
+                {{ list.NumCelevoy }}
+              </h6>
+            </div>
+
+            <div v-if="budget.EnrolledAbits.length">
+              <details open>
+                <summary class="alert alert-success" role="alert">
+                  Зачислены
+                  <strong>({{ budget.EnrolledAbits.length }})</strong>
+                </summary>
+                <table
+                  class="
+                    table table-striped table-bordered
+                    align-middle
+                    justify-content-center
+                    table-responsive
+                  "
+                >
+                  <thead
+                    class="text-center align-middle"
+                    style="font-size: 12px"
+                  >
+                    <tr class="align-middle">
+                      <th scope="col" rowspan="2">№ п/п</th>
+                      <th scope="col" rowspan="2">
+                        № п/п <br />Согласия<br />
+                        на зачисление
+                      </th>
+                      <th scope="col" rowspan="2">
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;СНИЛС&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                      </th>
+                      <th scope="col" rowspan="2">
+                        Особое право / Целевой прием
+                      </th>
+                      <th scope="col" v-bind:colspan="list.Vstupitelnoe.length">
+                        Вступительные испытания
+                      </th>
+                      <th scope="col" rowspan="2">Сумма баллов за ВИ</th>
+                      <th scope="col" v-bind:colspan="list.IDSname.length">
+                        Индивидуальные достижения
+                      </th>
+                      <th scope="col" rowspan="2">Сумма баллов за ИД</th>
+                      <th scope="col" rowspan="2">Согласие на зачисление</th>
+                      <th scope="col" rowspan="2">
+                        Сумма<br />конкурсных<br />баллов
+                      </th>
+                    </tr>
+
+                    <tr>
+                      <th scope="col" v-for="v of list.Vstupitelnoe">
+                        {{ v }}
+                      </th>
+                      <th scope="col" v-for="v of list.IDSname">{{ v }}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr
+                      v-for="(el, idx) of budget.EnrolledAbits"
+                      :class="el.Soglasie? 'alert alert-primary ' : ''"
+                    >
+                      <th scope="row">{{ idx + 1 }}</th>
+                      <td v-if="el.Soglasie">{{ getNum1() }}</td>
+                      <td v-else></td>
+
+                      <td>{{ el.Snils }}</td>
+                      <td>{{ el.CelevoyPriem }}</td>
+
+                      <td v-for="v of el.Vstuplenie.values">
+                        {{ v }}
+                      </td>
+                      <td>{{ el.Vstuplenie.total }}</td>
+                      <td v-for="v of el.IDs.values">{{ v }}</td>
+                      <td>{{ el.IDs.total }}</td>
+                      <td v-if="el.Soglasie">Да</td>
+                      <td v-else>Нет</td>
+                      <td>{{ el.KonkursTotal }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </details>
+            </div>
+            <details class="mt-5" open>
+              <summary role="alert" class="alert alert-warning">
+                Заявления
+                <strong>({{ budget.Abits.length }})</strong>
+              </summary>
+
+              <table
+                class="
+                  table table-striped table-bordered
+                  align-middle
+                  justify-content-center
+                  fs-6
+                "
+              >
+                <thead class="text-center align-middle" style="font-size: 12px">
+                  <tr class="align-middle">
+                    <th scope="col" rowspan="2">№ п/п</th>
+                    <th scope="col" rowspan="2">
+                      № п/п <br />Согласия<br />
+                      на зачисление
+                    </th>
+                    <th scope="col" rowspan="2">
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;СНИЛС&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    </th>
+                    <th scope="col" rowspan="2">
+                      Особое право / Целевой прием
+                    </th>
+                    <th scope="col" v-bind:colspan="list.Vstupitelnoe.length">
+                      Вступительные испытания
+                    </th>
+                    <th scope="col" rowspan="2">Сумма баллов за ВИ</th>
+                    <th scope="col" v-bind:colspan="list.IDSname.length">
+                      Индивидуальные достижения
+                    </th>
+                    <th scope="col" rowspan="2">Сумма баллов за ИД</th>
+                    <th scope="col" rowspan="2">Согласие на зачисление</th>
+                    <th scope="col" rowspan="2">
+                      Сумма<br />конкурсных<br />баллов
+                    </th>
+                  </tr>
+
+                  <tr>
+                    <th scope="col" v-for="v of list.Vstupitelnoe">
+                      {{ v }}
+                    </th>
+                    <th scope="col" v-for="v of list.IDSname">{{ v }}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr
+                    v-for="(el, idx) of budget.Abits"
+                    :class="el.Soglasie? 'alert alert-primary ' : ''"
+                  >
+                    <th scope="row">{{ idx + 1 }}</th>
+                    <td v-if="el.Soglasie">{{ getNum2() }}</td>
+                    <td v-else></td>
+
+                    <td>{{ el.Snils }}</td>
+                    <td>{{ el.CelevoyPriem }}</td>
+
+                    <td v-for="v of el.Vstuplenie.values">
+                      {{ v }}
+                    </td>
+                    <td>{{ el.Vstuplenie.total }}</td>
+                    <td v-for="v of el.IDs.values">{{ v }}</td>
+                    <td>{{ el.IDs.total }}</td>
+                    <td v-if="el.Soglasie">Да</td>
+                    <td v-else>Нет</td>
+                    <td>{{ el.KonkursTotal }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </details>
+          </div>
+        </div>
+        <div v-if="list.NumMestPl">
+          <div class="mt-5">
+            <div class="m-2 my-4">
+              <h5>Уровень образования - Специалитет</h5>
+              <h5>Направление/Специальность - {{ list.Napravlenie }}</h5>
+              <h5>Форма обучения - {{ list.Form }}</h5>
+              <h5>Источник финансирования - Полное возмещение затрат</h5>
+              <h5>Число мест - {{ list.NumMestPl }}</h5>
+              <!--  <h6 class="ms-4">
+                для абитуриентов с особыми правами -
+                {{ list.NumParava }}
+              </h6>
+              <h6 class="ms-4">
+                на целевой приём -
+                {{ list.NumCelevoy }}
+              </h6>-->
+            </div>
+
+            <div v-if="platnik.EnrolledAbits.length">
+              <details open>
+                <summary class="alert alert-success" role="alert">
+                  Зачислены
+                  <strong>({{ platnik.EnrolledAbits.length }})</strong>
+                </summary>
+                <table class="table table-striped table-bordered align-middle">
+                  <thead
+                    class="text-center align-middle"
+                    style="font-size: 12px"
+                  >
+                    <tr class="align-middle">
+                      <th scope="col" rowspan="2">№ п/п</th>
+                      <th scope="col" rowspan="2">
+                        № п/п <br />Согласия<br />
+                        на зачисление
+                      </th>
+                      <th scope="col" rowspan="2">
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;СНИЛС&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                      </th>
+                      <th scope="col" rowspan="2">
+                        Особое право / Целевой прием
+                      </th>
+                      <th scope="col" v-bind:colspan="list.Vstupitelnoe.length">
+                        Вступительные испытания
+                      </th>
+                      <th scope="col" rowspan="2">Сумма баллов за ВИ</th>
+                      <th scope="col" v-bind:colspan="list.IDSname.length">
+                        Индивидуальные достижения
+                      </th>
+                      <th scope="col" rowspan="2">Сумма баллов за ИД</th>
+                      <th scope="col" rowspan="2">Согласие на зачисление</th>
+                      <th scope="col" rowspan="2">
+                        Сумма<br />конкурсных<br />баллов
+                      </th>
+                    </tr>
+
+                    <tr>
+                      <th scope="col" v-for="v of list.Vstupitelnoe">
+                        {{ v }}
+                      </th>
+                      <th scope="col" v-for="v of list.IDSname">{{ v }}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr
+                      v-for="(el, idx) of platnik.EnrolledAbits"
+                      :class="el.Soglasie? 'alert alert-primary ' : ''"
+                    >
+                      <th scope="row">{{ idx + 1 }}</th>
+                      <td v-if="el.Soglasie">{{ getNum3() }}</td>
+                      <td v-else></td>
+
+                      <td>{{ el.Snils }}</td>
+                      <td>{{ el.CelevoyPriem }}</td>
+
+                      <td v-for="v of el.Vstuplenie.values">
+                        {{ v }}
+                      </td>
+                      <td>{{ el.Vstuplenie.total }}</td>
+                      <td v-for="v of el.IDs.values">{{ v }}</td>
+                      <td>{{ el.IDs.total }}</td>
+                      <td v-if="el.Soglasie">Да</td>
+                      <td v-else>Нет</td>
+                      <td>{{ el.KonkursTotal }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </details>
+            </div>
+            <details class="mt-5" open>
+              <summary role="alert" class="alert alert-warning">
+                Заявления
+                <strong>({{ platnik.Abits.length }})</strong>
+              </summary>
+              <table class="table table-striped table-bordered align-middle">
+                <thead class="text-center align-middle" style="font-size: 12px">
+                  <tr class="align-middle">
+                    <th scope="col" rowspan="2">№ п/п</th>
+                    <th scope="col" rowspan="2">
+                      № п/п <br />Согласия<br />
+                      на зачисление
+                    </th>
+                    <th scope="col" rowspan="2">
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;СНИЛС&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    </th>
+                    <th scope="col" rowspan="2">
+                      Особое право / Целевой прием
+                    </th>
+                    <th scope="col" v-bind:colspan="list.Vstupitelnoe.length">
+                      Вступительные испытания
+                    </th>
+                    <th scope="col" rowspan="2">Сумма баллов за ВИ</th>
+                    <th scope="col" v-bind:colspan="list.IDSname.length">
+                      Индивидуальные достижения
+                    </th>
+                    <th scope="col" rowspan="2">Сумма баллов за ИД</th>
+                    <th scope="col" rowspan="2">Согласие на зачисление</th>
+                    <th scope="col" rowspan="2">
+                      Сумма<br />конкурсных<br />баллов
+                    </th>
+                  </tr>
+
+                  <tr>
+                    <th scope="col" v-for="v of list.Vstupitelnoe">
+                      {{ v }}
+                    </th>
+                    <th scope="col" v-for="v of list.IDSname">{{ v }}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr
+                    v-for="(el, idx) of platnik.Abits"
+                    :class="el.Soglasie? 'alert alert-primary ' : ''"
+                  >
+                    <th scope="row">{{ idx + 1 }}</th>
+                    <td v-if="el.Soglasie">{{ getNum4() }}</td>
+                    <td v-else></td>
+
+                    <td>{{ el.Snils }}</td>
+                    <td>{{ el.CelevoyPriem }}</td>
+
+                    <td v-for="v of el.Vstuplenie.values">
+                      {{ v }}
+                    </td>
+                    <td>{{ el.Vstuplenie.total }}</td>
+                    <td v-for="v of el.IDs.values">{{ v }}</td>
+                    <td>{{ el.IDs.total }}</td>
+                    <td v-if="el.Soglasie">Да</td>
+                    <td v-else>Нет</td>
+                    <td>{{ el.KonkursTotal }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </details>
+          </div>
+        </div>
+      </div>
+    </div>
+    <a href="#start" class="button btn btn-dark btn-lg">&uArr;</a>
+    <span id="id" style="visibility: hidden"><%= id %></span>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+    <script>
+      let num1 = 0
+
+      function getNum1() {
+        return (num1 = num1 + 1)
+      }
+      let num2 = 0
+
+      function getNum2() {
+        return (num2 = num2 + 1)
+      }
+      let num3 = 0
+
+      function getNum3() {
+        return (num3 = num3 + 1)
+      }
+      let num4 = 0
+
+      function getNum4() {
+        return (num4 = num4 + 1)
+      }
+      var vm = new Vue({
+        el: '#app',
+
+        data: {
+          list: [],
+          id: '',
+          budget: [],
+          platnik: [],
+        },
+
+        async mounted() {
+          const id = document.querySelector('#id').innerHTML
+
+          this.id = id
+          document.querySelector('#id').remove()
+          const resp = await fetch(location.origin + '/static/rating_spec.json')
+          const data = await resp.json()
+          this.list = data.find(el => el.Napravlenie === id)
+
+          this.budget = {
+            Abits: this.list.Abits.filter(
+              el => el.Finansirovanie === 'Бюджетная основа'
+            ),
+            EnrolledAbits: this.list.EnrolledAbits.filter(
+              el => el.Finansirovanie === 'Бюджетная основа'
+            ),
+          }
+
+          this.platnik = {
+            Abits: this.list.Abits.filter(
+              el => el.Finansirovanie === 'Полное возмещение затрат'
+            ),
+            EnrolledAbits: this.list.EnrolledAbits.filter(
+              el => el.Finansirovanie === 'Полное возмещение затрат'
+            ),
+          }
+        },
+      })
+
+      let lastScrollTop = 0
+      const btn = document.querySelector('.button')
+      document.addEventListener('scroll', event => {
+        event.preventDefault()
+        let st = window.pageYOffset || document.documentElement.scrollTop
+        if (st > lastScrollTop) {
+          btn.classList.remove('down')
+          btn.classList.add('up')
+        } else {
+          btn.classList.remove('up')
+          btn.classList.add('down')
+        }
+        lastScrollTop = st <= 0 ? 0 : st
+      })
+    </script>
+  </body>
+</html>

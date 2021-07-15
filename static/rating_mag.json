@@ -1,0 +1,61 @@
+[
+  {
+    "Napravlenie": "Бизнес-информатика (Анализ данных и цифровая экономика)",
+    "Form": "Очная",
+    "NumMest": 7,
+    "NumMestPl": 7,
+    "NumParava": 2,
+    "NumCelevoy": 1,
+    "IDSname": [
+      "Публикации Web of Science, Scopus",
+      "Статьи ВАК, РИНЦ",
+      "Олимпиады"
+    ],
+    "EnrolledAbits": [
+      {
+        "FIO": "Иванов Иван Иванович",
+        "Snils": "123123",
+        "CelevoyPriem": "Особое право",
+        "Finansirovanie": "Бюджетная основа",
+        "Vstuplenie": 100,
+        "Attestat": 4.9,
+        "IDs": {
+          "total": 30,
+          "values": ["10", "10", "10"]
+        },
+        "Soglasie": true,
+        "KonkursTotal": 148
+      }
+    ],
+    "Abits": [
+      {
+        "FIO": "Иванов Иван Иванович",
+        "Snils": "123123",
+        "CelevoyPriem": "Особое право",
+        "Finansirovanie": "Бюджетная основа",
+        "Vstuplenie": 100,
+        "Attestat": 4.9,
+        "IDs": {
+          "total": 0,
+          "values": [" ", " ", " "]
+        },
+        "Soglasie": true,
+        "KonkursTotal": 148
+      },
+      {
+        "FIO": "Иванов Иван Иванович",
+        "Snils": "123123",
+        "CelevoyPriem": "",
+        "Finansirovanie": "Полное возмещение затрат",
+        "Vstuplenie": 100,
+        "Attestat": 4.9,
+        "IDs": {
+          "total": 33,
+          "values": ["10", "12", "11"]
+        },
+        "Soglasie": true,
+        "KonkursTotal": 148
+      }
+    ]
+  }
+]

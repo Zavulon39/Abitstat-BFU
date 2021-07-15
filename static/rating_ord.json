@@ -1,0 +1,54 @@
+[
+  {
+    "Napravlenie": "ординатура",
+    "Form": "Очная",
+    "NumMest": 7,
+    "NumMestPl": 7,
+    "NumParava": 2,
+    "NumCelevoy": 1,
+    "IDSname": [" Стипендия Президента", " Диплом с отличием", "Публикации"],
+    "EnrolledAbits": [
+      {
+        "FIO": "Иванов Иван Иванович",
+        "Snils": "123123",
+        "CelevoyPriem": "Особое право",
+        "Finansirovanie": "Бюджетная основа",
+        "Vstuplenie": 100,
+        "IDs": {
+          "total": 0,
+          "values": [" ", " ", " "]
+        },
+        "Soglasie": true,
+        "KonkursTotal": 148
+      }
+    ],
+    "Abits": [
+      {
+        "FIO": "Иванов Иван Иванович",
+        "Snils": "123123",
+        "CelevoyPriem": "Особое право",
+        "Finansirovanie": "Бюджетная основа",
+        "Vstuplenie": 100,
+        "IDs": {
+          "total": 0,
+          "values": [" ", " ", " "]
+        },
+        "Soglasie": true,
+        "KonkursTotal": 148
+      },
+      {
+        "FIO": "Иванов Иван Иванович",
+        "Snils": "123123",
+        "CelevoyPriem": "Особое право",
+        "Finansirovanie": "Полное возмещение затрат",
+        "Vstuplenie": 100,
+        "IDs": {
+          "total": 0,
+          "values": [" ", " ", " "]
+        },
+        "Soglasie": true,
+        "KonkursTotal": 148
+      }
+    ]
+  }
+]

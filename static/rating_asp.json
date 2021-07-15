@@ -1,0 +1,58 @@
+[
+  {
+    "Napravlenie": "аспирантура",
+    "Form": "Очная",
+    "NumMest": 7,
+    "NumMestPl": 7,
+    "NumParava": 2,
+    "NumCelevoy": 1,
+    "IDSname": [
+      "Публикации Web of Science, Scopus",
+      " Изобретения, патенты",
+      "Внешние проекты, гранты"
+    ],
+    "EnrolledAbits": [
+      {
+        "FIO": "Иванов Иван Иванович",
+        "Snils": "123123",
+        "CelevoyPriem": "Особое право",
+        "Finansirovanie": "Бюджетная основа",
+        "Vstuplenie": 100,
+        "IDs": {
+          "total": 0,
+          "values": [" ", " ", " "]
+        },
+        "Soglasie": true,
+        "KonkursTotal": 148
+      }
+    ],
+    "Abits": [
+      {
+        "FIO": "Иванов Иван Иванович",
+        "Snils": "123123",
+        "CelevoyPriem": "Особое право",
+        "Finansirovanie": "Бюджетная основа",
+        "Vstuplenie": 100,
+        "IDs": {
+          "total": 0,
+          "values": [" ", " ", " "]
+        },
+        "Soglasie": true,
+        "KonkursTotal": 148
+      },
+      {
+        "FIO": "Иванов Иван Иванович",
+        "Snils": "123123",
+        "CelevoyPriem": "Особое право",
+        "Finansirovanie": "Полное возмещение затрат",
+        "Vstuplenie": 100,
+        "IDs": {
+          "total": 3,
+          "values": ["1", "1", "1"]
+        },
+        "Soglasie": true,
+        "KonkursTotal": 148
+      }
+    ]
+  }
+]
